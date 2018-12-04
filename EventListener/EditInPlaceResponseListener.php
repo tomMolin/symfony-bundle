@@ -85,7 +85,7 @@ HTML;
         $content = $event->getResponse()->getContent();
 
         // Clean the content for malformed tags in attributes or encoded tags
-        $replacement = "\"$1🚫 Can't be translated here. 🚫\"";
+        $replacement = "\"$1⚠️ Cannot be translated here in live edit mod. ⚠️\"";
         $pattern = "@\\s*[\"']\\s*(.[a-zA-Z]+:|)(<x-trans.+data-value=\"([^&\"]+)\".+?(?=<\\/x-trans)<\\/x-trans>)\\s*[\"']@mi";
         if (!$this->showUntranslatable) {
             $replacement = '"$3"';

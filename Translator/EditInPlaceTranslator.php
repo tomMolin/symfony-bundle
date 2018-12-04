@@ -14,6 +14,7 @@ namespace Translation\Bundle\Translator;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
+use Symfony\Component\VarDumper\VarDumper;
 use Translation\Bundle\EditInPlace\ActivatorInterface;
 
 /**
@@ -59,7 +60,8 @@ final class EditInPlaceTranslator implements TranslatorInterface, TranslatorBagI
     public function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
         $original = $this->translator->trans($id, $parameters, $domain, $locale);
-        if (!$this->activator->checkRequest($this->requestStack->getMasterRequest())) {
+        $noEdit = array_key_exists('noEdit', $parameters) && true === $parameters['noEdit'];
+        if (!$this->activator->checkRequest($this->requestStack->getMasterRequest()) || $noEdit) {
             return $original;
         }
 
